@@ -1,0 +1,50 @@
+/*
+https://cgi.tutsplus.com/tutorials/procedural-modeling-with-mel-scripts-in-maya-day-2--cg-3432
+
+Four procedures in MEL:
+1 - take any # of objects and create a chained hierarchy
+2 - un-parent selected objects
+3 - move pivot points to world-space origin
+4 - create a Fermat's Spiral (whorl on sunflower heads)
+*/
+//Make Parent Chain
+global proc dt_makeParentChain(){
+string $selectedObjects[] = `ls -sl`;
+int $numSelectedObjects = `size($selectedObjects)`;
+    for($i = 1; $i < $numSelectedObjects; $i++) {
+    parent $selectedObjects[($i - 1)] $selectedObjects[$i];
+    };
+select -deselect $selectedObjects[($numSelectedObjects - 1)];
+};
+  
+// Un-Parent Objects
+global proc dt_unParentSelected(){
+parent -w;
+};
+  
+// Move Pivot to Origin
+global proc dt_pivotToOrigin(){ 
+string $selectedObjects[] = `ls -sl`;
+    for($thisObj in $selectedObjects){
+    select -r $thisObj;
+    xform -ws -rotatePivot 0 0 0 -scalePivot 0 0 0;
+    };
+};
+  
+//Create Fermat's Spiral of Spheres
+global proc dt_fermatSpiral(){ 
+string $seedSphere[] = `polySphere -sx 8 -sy 8`;
+string $allSpheres[];
+    for ($i=1; $i<1000; $i++){
+    string $duplicatedSphere[] = `duplicate`;
+    $allSpheres[size($allSpheres)] = $duplicatedSphere[0];
+    };
+select -r $allSpheres;
+dt_makeParentChain;
+select -r $allSpheres;
+move 0.05 0 0;
+dt_pivotToOrigin;
+select -r $allSpheres;
+rotate 0 137.5 0;
+dt_unParentSelected;
+};

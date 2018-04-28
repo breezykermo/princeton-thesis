@@ -1,0 +1,80 @@
+//Maya Script "koddeFKController"
+//Created by Kostas Gialitakis 2010, kostas.gialitakis@gmail.com
+
+//This script is used for creating "Fix Groups" for FK controllers when rigging. Specifically NURBS circle type controllers.
+//It can also create the associated orient constraint between your control object and your joint.
+
+//To use it first create a NURBS circle, rename it to an appropriate name.
+//Then first select your new NURBS circle and secondly select your joint you want to control.
+//Use the command "createFixGroup;".
+
+//If you also want to create the orient constraint to control the joint with your NURBS circle then type "createOrientConstraint;".
+//For this to work it requires that you have created a "Fix Group" as mentioned above prior to executing this command.
+//You don't need to worry about what to select for this one.
+
+//Enjoy :)
+
+
+global proc createFixGroup()
+{
+
+global string $select[];
+
+string $select[] = `ls -sl`;
+
+string $newName = $select[0] + "_fixGroup";
+
+group -em; xform -os -piv 0 0 0;
+string $newNull[] =`ls -sl`;
+
+rename $newNull[0] $newName;
+
+select -cl;	select -r $select[1]; select -add $newName;
+
+pointConstraint -offset 0 0 0 -weight 1;
+orientConstraint -offset 0 0 0 -weight 1;
+
+string $deleteMe = $newName + "_pointConstraint1";
+select -r $deleteMe;
+doDelete;
+
+string $deleteMe = $newName + "_orientConstraint1";
+select -r $deleteMe;
+doDelete;
+
+select -cl; select -r $select[1]; select -add $select[0];
+
+pointConstraint -offset 0 0 0 -weight 1;
+orientConstraint -offset 0 0 90 -weight 1;
+
+string $deleteMe = $select[0] + "_pointConstraint1";
+select -r $deleteMe;
+doDelete;
+
+string $deleteMe = $select[0] + "_orientConstraint1";
+select -r $deleteMe;
+doDelete;
+
+select -cl; select -r $select[0]; select -add $newName;
+
+parent;
+
+select -cl; select -r $select[0];
+
+makeIdentity -apply true -t 1 -r 1 -s 1 -n 0;
+
+print ("Voila!");
+}
+
+global proc createOrientConstraint()
+{
+
+global string $select[0];
+select -cl; select -r $select[0]; select -add $select[1];
+
+orientConstraint -offset 0 0 0 -weight 1;
+
+select -cl; select -r $select[0];
+
+print ("Enjoy!");
+}
