@@ -176,6 +176,8 @@ class Cabler:
     else:
       for i in range(0, len(cyls)-1):
         self.tube_two([cyls[i], cyls[i+1]], arc_name+'_'+str(i))
+      # link the last back to the beginning. Does something weird and lowers...
+      # self.tube_two([ cyls[len(cyls)-1], cyls[0] ], arc_name+'_'+str(len(cyls)-1))
       delete(cyls[len(cyls)-1])
 
 
@@ -257,7 +259,7 @@ cabler = Cabler(100)
   # for cable_id in cable_ids:
   #   cabler.tube(cable_id)
 
-cabler.tube('tata-tgn-atlantic')
+cabler.tube('tata-tgn-western-europe')
 # print 'here'
 # all()
 
