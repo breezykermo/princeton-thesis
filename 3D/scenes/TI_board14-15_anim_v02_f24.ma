@@ -1,6 +1,6 @@
 //Maya ASCII 2018 scene
 //Name: TI_board14-15_anim_v02_f24.ma
-//Last modified: Sat, Apr 28, 2018 07:37:35 PM
+//Last modified: Sat, Apr 28, 2018 07:51:26 PM
 //Codeset: UTF-8
 file -rdi 1 -ns "globe_maya2017" -rfn "globe_maya2017RN" -op "v=0;" -typ "mayaAscii"
 		 "/Users/lachlankermode/code/thesis/core/3D//assets/models/inflight-entertainment/globe_maya2017.ma";
@@ -285,7 +285,7 @@ createNode lookAt -n "camera1_group";
 	rename -uid "8A96AF74-3140-42BA-3980-3BB3EDC7852E";
 	setAttr ".t" -type "double3" 76.160858531584182 -6.8544680060355576 64.313053449433085 ;
 	setAttr ".a" -type "double3" 0 0 -1 ;
-	setAttr ".db" 75.999572671784875;
+	setAttr ".db" 144.99534371249095;
 	setAttr ".tws" 3.3460956626430443e-05;
 createNode transform -n "camera1" -p "camera1_group";
 	rename -uid "FADF7614-2C41-3631-7186-0BB424B72C72";
@@ -295,7 +295,7 @@ createNode camera -n "cameraShape2" -p "camera1";
 	setAttr ".rnd" no;
 	setAttr ".cap" -type "double2" 1.4173 0.9449 ;
 	setAttr ".ff" 0;
-	setAttr ".coi" 75.999572671784875;
+	setAttr ".coi" 144.99534371249095;
 	setAttr ".ow" 30;
 	setAttr ".imn" -type "string" "camera1";
 	setAttr ".den" -type "string" "camera1_depth";
@@ -531,17 +531,17 @@ createNode reference -n "TI_doublesided_packet_PUBRN";
 		"TI_doublesided_packet_PUBRN"
 		"TI_doublesided_packet_PUBRN" 0
 		"TI_doublesided_packet_PUBRN" 33
-		2 "|TI_doublesided_packet_PUB:cube_CTRL" "translate" " -type \"double3\" 22.82146600510472112 -71.76542685679537215 65.7592946558487057"
+		2 "|TI_doublesided_packet_PUB:cube_CTRL" "translate" " -type \"double3\" 52.86127406203513601 -29.56610070319354477 79.94665868784571217"
 		
 		2 "|TI_doublesided_packet_PUB:cube_CTRL" "translateX" " -av"
 		2 "|TI_doublesided_packet_PUB:cube_CTRL" "translateY" " -av"
 		2 "|TI_doublesided_packet_PUB:cube_CTRL" "translateZ" " -av"
-		2 "|TI_doublesided_packet_PUB:cube_CTRL" "rotate" " -type \"double3\" 124.01550482373160378 38.45510986798976205 -22.37904650430066056"
+		2 "|TI_doublesided_packet_PUB:cube_CTRL" "rotate" " -type \"double3\" 93.3770425524811003 37.49528523497246368 -21.15108729261420706"
 		
 		2 "|TI_doublesided_packet_PUB:cube_CTRL" "rotateX" " -av"
 		2 "|TI_doublesided_packet_PUB:cube_CTRL" "rotateY" " -av"
 		2 "|TI_doublesided_packet_PUB:cube_CTRL" "rotateZ" " -av"
-		2 "|TI_doublesided_packet_PUB:cube_CTRL" "scale" " -type \"double3\" 0 0 0"
+		2 "|TI_doublesided_packet_PUB:cube_CTRL" "scale" " -type \"double3\" 1.5 1.5 1.5"
 		
 		2 "|TI_doublesided_packet_PUB:cube_CTRL" "scaleX" " -av"
 		2 "|TI_doublesided_packet_PUB:cube_CTRL" "scaleY" " -av"
@@ -993,8 +993,8 @@ select -ne :time1;
 	setAttr -cb on ".ihi";
 	setAttr -k on ".nds";
 	setAttr -cb on ".bnm";
-	setAttr ".o" 556;
-	setAttr ".unw" 556;
+	setAttr ".o" 348;
+	setAttr ".unw" 348;
 select -ne :hardwareRenderingGlobals;
 	setAttr ".otfna" -type "stringArray" 22 "NURBS Curves" "NURBS Surfaces" "Polygons" "Subdiv Surface" "Particles" "Particle Instance" "Fluids" "Strokes" "Image Planes" "UI" "Lights" "Cameras" "Locators" "Joints" "IK Handles" "Deformers" "Motion Trails" "Components" "Hair Systems" "Follicles" "Misc. UI" "Ornaments"  ;
 	setAttr ".otfva" -type "Int32Array" 22 0 1 1 1 1 1

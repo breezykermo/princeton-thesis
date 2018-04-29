@@ -137,6 +137,31 @@ class Cabler:
       delete(name_str+'_constraint')
       delete(name_str+'_orienter')
 
+  def createCylinders(self, pts, name):
+    """
+    Create cylinders at each of the points in pts, which will be named as name_idx.
+    """
+    names = []
+    for idx, pt in enumerate(pts):
+      cart_p = self._cart_haversine(pt)
+      name_str = "{0}_{1}".format(name, idx).replace('-', '_')
+      n = polyCylinder(n=name_str, h=0.2, r=0.3)
+      move(cart_p)
+      # use an intermediary shape to orient the cylinder to the center, through an aim constraint
+      orienter = polySphere(n=name_str+"_orienter")
+      move(cart_p)
+      move((0,10,0), r=True)
+      aimConstraint(name_str+"_orienter", name_str, w=1, aim=(0,1,0), u=(0,1,0), wut='scene', n=name_str+'_constraint')
+      move(name_str+"_orienter", [0,0,0])
+      # remove connections, clean up
+      disconnectAttr(name_str+'_constraint.constraintRotateX', name_str+'.rotateX')
+      disconnectAttr(name_str+'_constraint.constraintRotateY', name_str+'.rotateY')
+      disconnectAttr(name_str+'_constraint.constraintRotateZ', name_str+'.rotateZ')
+      delete(name_str+'_constraint')
+      delete(name_str+'_orienter')
+      names.append(name_str)
+    return names
+
   def polyCylinders(self, cable_id, name='none'):
     """
     Create spheres at each of the endpoints of a cable, which will be named as name
@@ -170,15 +195,18 @@ class Cabler:
     arc_name = (cable_id + '_arc').replace('-', '_')
     cyls = self.polyCylinders(cable_id)
     print cyls
-    if len(cyls) == 2:
-      self.tube_two(cyls, arc_name)
-      delete(cyls[1])
-    else:
-      for i in range(0, len(cyls)-1):
-        self.tube_two([cyls[i], cyls[i+1]], arc_name+'_'+str(i))
-      # link the last back to the beginning. Does something weird and lowers...
-      # self.tube_two([ cyls[len(cyls)-1], cyls[0] ], arc_name+'_'+str(len(cyls)-1))
-      delete(cyls[len(cyls)-1])
+    for i in range(0, len(cyls)-1):
+      self.tube_two([cyls[i], cyls[i+1]], arc_name+'_'+str(i))
+    # link the last back to the beginning. Does something weird and lowers...
+    # self.tube_two([ cyls[len(cyls)-1], cyls[0] ], arc_name+'_'+str(len(cyls)-1))
+    delete(cyls[len(cyls)-1])
+
+  def tube_from_points(self, pts, name):
+    assert len(pts) == 2, "tube_from_points array must have only two points"
+    arc_name = pts[0].toStr() + '_' + pts[1].toStr() + '_arc'
+    print arc_name
+    # cyls = self.createCylinders(pts, name)
+    # self.tube_two(cyls, name + '_arc')
 
 
   def tube_two(self, cyls, arc_name):
@@ -259,7 +287,12 @@ cabler = Cabler(100)
   # for cable_id in cable_ids:
   #   cabler.tube(cable_id)
 
-cabler.tube('tata-tgn-western-europe')
+cabler.tube_from_points([
+  LatLon(40.152908, -74.062861), # wall township, NJ
+  LatLon(35.32533, -81.86866)    # forest city, NC
+], 'NJ_NC')
+
+
 # print 'here'
 # all()
 
